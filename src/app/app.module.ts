@@ -9,12 +9,14 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/template/header/header.component';
 import { FooterComponent } from './components/template/footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TabelaComponent } from './views/tabela/tabela.component';
 @NgModule({
   declarations: [
     AppComponent,
     OrcamentoComponent,
     HeaderComponent,
     FooterComponent,
+    TabelaComponent,
   ],
   imports: [
     BrowserModule,
