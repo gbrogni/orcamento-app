@@ -11,8 +11,8 @@ export class TabelaComponent implements OnInit {
 
   constructor(private router: Router, headerService: HeaderService) { 
     headerService.headerData = {
-      title: 'Cadastro de autor',
-      icon: 'create',
+      title: 'Home',
+      icon: 'home',
       routeUrl: ''
     }
   }
@@ -20,8 +20,6 @@ export class TabelaComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  navigateToItemCreate(): void{
-    this.router.navigate(['/orcamento'])
-  }
+
 
 }

@@ -1,8 +1,31 @@
-.example-container {
-    height: 400px;
-    overflow: auto;
-  }
-  
-  table {
+
+
+.form{
+  background-color: #fff;
+  border-radius: 16px;
+  height: 38rem; width: 78rem;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  display: flex;
+  margin:20px auto;
+  padding: 20px auto;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.table{
+  table{
     width: 100%;
+
   }
+  position: relative;
+  width: 100%;
+  height: 21.45rem;
+  border-width: 1px;
+  border-style: outset;
+  border-color: black;
+  overflow-x: auto; overflow-y: auto;
+  margin-right: 20px; 
+  margin-left: 20px;
+}
+

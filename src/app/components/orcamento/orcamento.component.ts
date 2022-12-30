@@ -1,7 +1,10 @@
+import { MatTableDataSource } from '@angular/material/table';
 import { HeaderService } from './../template/header/header.service';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { OrcamentoService } from './orcamento.service';
 import { Orcamento } from './orcamento.model';
+import { MatPaginator } from '@angular/material/paginator';
+
 
 @Component({
   selector: 'app-orcamento',
@@ -13,6 +16,7 @@ export class OrcamentoComponent implements OnInit {
   orcamentos: Orcamento[] = [{
     codEmpresa: 0,
     codProduto: 0,
+    
     nomeProduto: '',
     qtde: 0,
     custoUni: 0,
@@ -20,7 +24,10 @@ export class OrcamentoComponent implements OnInit {
     custoTotal: 0
   }]
 
-  displayedColumns: string[] = ['codEmpresa', 'codProduto', 'nomeProduto', 'qtde', 'custoUni', 'valorVenda', 'custoTotal'];
+  displayedColumns: string[] = ['codProduto', 'nomeProduto', 'custoUni', 'valorVenda', 'custoTotal'];
+  dataSource: Orcamento[] = [];
+
+
 
   constructor(public orcamentoService: OrcamentoService, private headerService: HeaderService) { 
     this.orcamentoService.getProdutos().subscribe(orcamentos => {this.orcamentos = orcamentos})
@@ -39,7 +46,6 @@ export class OrcamentoComponent implements OnInit {
   }
 
   public hide:boolean=true;
-  dataSource:Orcamento[] = [];
 
   loadProdutos(){
     this.orcamentoService.getProdutos().subscribe(orcamentos=>{

@@ -1,6 +1,7 @@
-import { OrcamentoComponent } from './components/orcamento/orcamento.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
+import { OrcamentoComponent } from './components/orcamento/orcamento.component';
 import { TabelaComponent } from './views/tabela/tabela.component';
 
 const routes: Routes = [{
