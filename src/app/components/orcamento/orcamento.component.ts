@@ -1,10 +1,13 @@
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
 import { HeaderService } from './../template/header/header.service';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {  Component, Inject, OnInit } from '@angular/core';
 import { OrcamentoService } from './orcamento.service';
-import { Orcamento } from './orcamento.model';
-import { MatPaginator } from '@angular/material/paginator';
+import AnoConsult, { Orcamento } from './orcamento.model';
 
+export interface ano{
+  anoValue: string;
+  anoViewValue: string;
+}
 
 @Component({
   selector: 'app-orcamento',
@@ -13,24 +16,22 @@ import { MatPaginator } from '@angular/material/paginator';
   providers: [OrcamentoService]
 })
 export class OrcamentoComponent implements OnInit {
-  orcamentos: Orcamento[] = [{
-    codEmpresa: 0,
-    codProduto: 0,
-    
-    nomeProduto: '',
-    qtde: 0,
-    custoUni: 0,
-    valorVenda: 0,
-    custoTotal: 0
-  }]
+  orcamentos: Orcamento[] = [{ }]
 
   displayedColumns: string[] = ['codProduto', 'nomeProduto', 'custoUni', 'valorVenda', 'custoTotal'];
   dataSource: Orcamento[] = [];
 
+  Anos: ano[] = [
+    {anoValue: '2019', anoViewValue: '2019'},
+    {anoValue: '2020', anoViewValue: '2020'},
+  ]
 
-
-  constructor(public orcamentoService: OrcamentoService, private headerService: HeaderService) { 
-    this.orcamentoService.getProdutos().subscribe(orcamentos => {this.orcamentos = orcamentos})
+  constructor(
+    public orcamentoService: OrcamentoService, 
+    private headerService: HeaderService,
+    @Inject(MatSelectModule)public data: AnoConsult,
+    ) 
+    { 
     headerService.headerData = {
       title: 'Orçamento',
       icon: 'home',
@@ -41,16 +42,18 @@ export class OrcamentoComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  ngAfterViewInit(){
-    this.loadProdutos()
-  }
 
-  public hide:boolean=true;
-
-  loadProdutos(){
-    this.orcamentoService.getProdutos().subscribe(orcamentos=>{
-      this.dataSource=orcamentos;
+  consultar(){
+    this.orcamentoService.getByYear(this.data.AnoConsult).subscribe(orcamentosdados=>{
+      this.orcamentos = orcamentosdados;
     })
   }
+
+  calcular(){
+    this.orcamentoService.getProdutos(this.data.AnoConsult).subscribe(orcamentosdados=>{
+      this.orcamentos=orcamentosdados;
+    })
+  }
+
 
 }

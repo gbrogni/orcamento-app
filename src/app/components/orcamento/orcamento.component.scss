@@ -3,24 +3,20 @@
 .form{
   background-color: #fff;
   border-radius: 16px;
-  height: 38rem; width: 78rem;
+  height: 55em; width: 78rem;
   position: relative;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-  display: flex;
-  margin:20px auto;
-  padding: 20px auto;
   width: 100%;
   align-items: center;
-  margin-bottom: 20px;
+  top: 1.5rem;
 }
 .table{
   table{
     width: 100%;
-
   }
   position: relative;
   width: 100%;
-  height: 21.45rem;
+  height: 33rem;
   border-width: 1px;
   border-style: outset;
   border-color: black;
@@ -28,4 +24,19 @@
   margin-right: 20px; 
   margin-left: 20px;
 }
-
+.select{
+  margin-top: 10px;
+  height: 8rem;
+  button{
+    float: right;
+    margin-left: 1rem;
+    margin-top: 20px;
+    margin-right: 20px;
+  }
+  .pick{
+    float: left;
+    margin-left: 1.5rem;
+    margin-top: 20px;
+    margin-right: 20px;
+  }
+}

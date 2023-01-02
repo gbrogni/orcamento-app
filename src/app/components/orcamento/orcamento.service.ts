@@ -1,9 +1,10 @@
 import { Orcamento } from './orcamento.model';
+import AnoConsult from './orcamento.model';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, EMPTY, throwError } from "rxjs";
-import { map, catchError } from "rxjs/operators";
+import { catchError } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -11,7 +12,7 @@ import { map, catchError } from "rxjs/operators";
 
 export class OrcamentoService {
   
-  baseUrl = "https://localhost:7020/mvt";
+  baseUrl = "https://localhost:7020/";
   defaultRoute = "api/Reserva";
   
 
@@ -30,9 +31,12 @@ export class OrcamentoService {
     });
   }
 
-  getProdutos(): Observable<Orcamento[]>{
-    return this.httpClient.get<Orcamento[]>(this.baseUrl).pipe( catchError(this.handleError)
-    )
+  getProdutos(anoConsult: number): Observable<Orcamento[]>{
+    return this.httpClient.get<Orcamento[]>(`${this.baseUrl}Get?ano=${anoConsult}`);
+  }
+
+  getByYear(anoConsult: number): Observable<Orcamento[]>{
+    return this.httpClient.get<Orcamento[]>(`${this.baseUrl}GetByYear?ano=${anoConsult}`);
   }
 
   errorHandler(e: any): Observable<any> {

@@ -5,9 +5,9 @@ export class Orcamento{
     codProduto?: number;
     nomeProduto?:string;
     qtde?:number;
-    custoUni?: number;
+    custoUni?: number | null;
     valorVenda?:number;
-    custoTotal?:number;
+    custoTotal?:number | null;
     
     constructor(codEmpresa:number,tipo:string,data:Date,codProduto:number,nomeProduto:string,qtde:number,custoUni:number,valorVenda:number,custoTotal:number){
         this.codEmpresa=codEmpresa;
@@ -20,4 +20,9 @@ export class Orcamento{
         this.valorVenda=valorVenda;
         this.custoTotal=custoTotal;
     }
+}
+
+export default interface AnoConsult{
+    AnoConsult: number;
+    datas: Date;
 }
