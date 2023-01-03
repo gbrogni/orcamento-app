@@ -3,6 +3,7 @@ import { HeaderService } from './../template/header/header.service';
 import {  Component, Inject, OnInit } from '@angular/core';
 import { OrcamentoService } from './orcamento.service';
 import AnoConsult, { Orcamento } from './orcamento.model';
+import { ActivatedRoute } from '@angular/router';
 
 export interface ano{
   anoValue: string;
@@ -30,6 +31,7 @@ export class OrcamentoComponent implements OnInit {
     public orcamentoService: OrcamentoService, 
     private headerService: HeaderService,
     @Inject(MatSelectModule)public data: AnoConsult,
+    public route: ActivatedRoute
     ) 
     { 
     headerService.headerData = {
@@ -38,10 +40,22 @@ export class OrcamentoComponent implements OnInit {
       routeUrl:''
     }
   }
+ 
+  hidden!: boolean;
+  hiddenn!: boolean;
+
 
   ngOnInit(): void {
+    this.hidden = false;
   }
 
+  ocultaVenda(){
+    this.hidden = !this.hidden;
+}
+
+  ocultaCusto(){
+  this.hiddenn = !this.hiddenn;
+}
 
   consultar(){
     this.orcamentoService.getByYear(this.data.AnoConsult).subscribe(orcamentosdados=>{

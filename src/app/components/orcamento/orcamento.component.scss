@@ -6,22 +6,24 @@
   height: 55em; width: 78rem;
   position: relative;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-  width: 100%;
-  align-items: center;
-  top: 1.5rem;
+  width: 98%;
+  align-items:center;
+  top: 1.9rem;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 .table{
   table{
     width: 100%;
   }
   position: relative;
-  width: 100%;
+  width: 98%;
   height: 33rem;
   border-width: 1px;
   border-style: outset;
   border-color: black;
   overflow-x: auto; overflow-y: auto;
-  margin-right: 20px; 
+  margin-right: 80px; 
   margin-left: 20px;
 }
 .select{
@@ -38,5 +40,20 @@
     margin-left: 1.5rem;
     margin-top: 20px;
     margin-right: 20px;
+  }
+  .check{
+    float:left;
+    margin-left: 20rem;
+    margin-top: 30px;
+  } 
+}
+.handle{
+  &.hidden{
+    visibility: hidden;
+  }
+}
+.handle{
+  &.hiddenn{
+    visibility: hidden;
   }
 }
