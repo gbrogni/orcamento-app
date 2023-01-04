@@ -17,7 +17,17 @@ export interface ano{
   providers: [OrcamentoService]
 })
 export class OrcamentoComponent implements OnInit {
-  orcamentos: Orcamento[] = [{ }]
+  orcamentos: Orcamento[] = [{
+    codEmpresa:0,
+    tipo:'string',
+    data:new Date(),
+    codProduto: 0,
+    nomeProduto:'string',
+    qtde:0,
+    custoUni: 0,
+    valorVenda:0,
+    custoTotal:0,
+   }]
 
   displayedColumns: string[] = ['codProduto', 'nomeProduto', 'custoUni', 'valorVenda', 'custoTotal'];
   dataSource: Orcamento[] = [];
@@ -31,6 +41,7 @@ export class OrcamentoComponent implements OnInit {
     public orcamentoService: OrcamentoService, 
     private headerService: HeaderService,
     @Inject(MatSelectModule)public data: AnoConsult,
+    @Inject(MatSelectModule)public mes: Orcamento,
     public route: ActivatedRoute
     ) 
     { 
@@ -40,6 +51,9 @@ export class OrcamentoComponent implements OnInit {
       routeUrl:''
     }
   }
+
+
+   
  
   hidden!: boolean;
   hiddenn!: boolean;
@@ -47,6 +61,7 @@ export class OrcamentoComponent implements OnInit {
 
   ngOnInit(): void {
     this.hidden = false;
+    console.log(this.meses);
   }
 
   ocultaVenda(){
@@ -69,5 +84,12 @@ export class OrcamentoComponent implements OnInit {
     })
   }
 
+  
+  criaArray(): any[]{
+    return new Array(this.orcamentoService.getByYear(this.mes.data?.getMonth()));
+
+}
+
+meses:any[] = this.criaArray();
 
 }

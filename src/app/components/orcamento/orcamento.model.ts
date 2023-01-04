@@ -1,13 +1,13 @@
 export class Orcamento{
-    codEmpresa?:number;
-    tipo?:string;
-    data?:Date;
-    codProduto?: number;
-    nomeProduto?:string;
-    qtde?:number;
-    custoUni?: number | null;
-    valorVenda?:number;
-    custoTotal?:number | null;
+    codEmpresa:number;
+    tipo:string;
+    data:Date;
+    codProduto: number;
+    nomeProduto:string;
+    qtde:number;
+    custoUni: number | null;
+    valorVenda:number;
+    custoTotal:number | null;
     
     constructor(codEmpresa:number,tipo:string,data:Date,codProduto:number,nomeProduto:string,qtde:number,custoUni:number,valorVenda:number,custoTotal:number){
         this.codEmpresa=codEmpresa;
