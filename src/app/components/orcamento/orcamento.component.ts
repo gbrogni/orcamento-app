@@ -73,15 +73,46 @@ export class OrcamentoComponent implements OnInit {
 }
 
   consultar(){
-    this.orcamentoService.getByYear(this.data.AnoConsult).subscribe(orcamentosdados=>{
+    this.orcamentoService.getProdutos(this.data.AnoConsult).subscribe(orcamentosdados=>{
       this.orcamentos = orcamentosdados;
     })
   }
 
   calcular(){
-    this.orcamentoService.getProdutos(this.data.AnoConsult).subscribe(orcamentosdados=>{
+    this.orcamentoService.getByYear(this.data.AnoConsult).subscribe(orcamentosdados=>{
+      let orcamentomap = this.agrupaProd(orcamentosdados);
+      for (const [codProduto, produtos] of orcamentomap){
+        const mesMap = this.agrupaProdMes(produtos)
+        console.log(mesMap)
+        const [prod] = produtos;
+        for (const [mes, prodMeses] of mesMap){
+          const custoTotal = prod.custoUni * prodMeses.lenght
+          // const valortotal = 
+        }
+      }
       this.orcamentos=orcamentosdados;
     })
+  }
+
+  agrupaProd(produtos: any[]){
+    const mapProdutos = new Map()
+    for (const produto of produtos){
+      const mapValores = mapProdutos.get(produto.codProduto) || []
+      mapValores.push(produto)
+      mapProdutos.set(produto.codProduto, mapValores)
+    }
+    return mapProdutos; 
+  }
+
+  agrupaProdMes(produtos: any[]){
+    const mapMeses = new Map()
+    for (const produto of produtos){
+      const mes = new Date(produto.mes).getMonth()
+      const mapValores = mapMeses.get(mes) || []
+      mapValores.push(produto)
+      mapMeses.set(mes, mapValores)
+    }
+    return mapMeses;
   }
 
   

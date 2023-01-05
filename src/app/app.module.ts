@@ -17,6 +17,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { LOCALE_ID } from '@angular/core';
+import localePt from '@angular/common/locales/pt';
+import {registerLocaleData} from '@angular/common';
+registerLocaleData(localePt)
 
 
 @NgModule({
@@ -40,8 +44,12 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatButtonModule,
     FormsModule,
     MatCheckboxModule,
+
   ],
-  providers: [],
+  providers: [{   
+    provide: LOCALE_ID,
+    useValue: "pt-BR"
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
