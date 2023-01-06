@@ -29,7 +29,9 @@ export class OrcamentoComponent implements OnInit {
     custoTotal: 0,
   }]
 
-  displayedColumns: string[] = ['codProduto', 'nomeProduto', 'custoUni', 'valorVenda', 'custoTotal', 'VendaJaneiro'];
+  displayedColumns: string[] = ['codProduto', 'nomeProduto', 'custoUni', 'valorVenda', 'custoTotal', 'vendaJaneiro', 'custoJaneiro', 'vendaFevereiro', 'custoFevereiro',
+    'vendaMarço', 'custoMarço', 'vendaAbril', 'custoAbril', 'vendaMaio', 'custoMaio', 'vendaJunho', 'custoJunho', 'vendaJulho', 'custoJulho', 'vendaAgosto', 'custoAgosto',
+    'vendaSetembro', 'custoSetembro', 'vendaOutubro', 'custoOutubro', 'vendaNovembro', 'custoNovembro', 'vendaDezembro', 'custoDezembro'];
   dataSource: Orcamento[] = [];
 
   Anos: ano[] = [
@@ -50,8 +52,6 @@ export class OrcamentoComponent implements OnInit {
       routeUrl: ''
     }
   }
-
-
 
 
   hidden!: boolean;
@@ -100,10 +100,10 @@ export class OrcamentoComponent implements OnInit {
       for (const [codProduto, produtos] of orcamentomap) {
         const mesMap = this.agrupaProdMes(produtos)
         let [prod] = produtos;
-        let produtoMes : any = {};
+        let produtoMes: any = {};
         ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'].map((mes: string) => {
           produtoMes[mes] = {
-            custoTotal: 0, 
+            custoTotal: 0,
             valorVenda: 0
           }
         })

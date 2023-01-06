@@ -22,10 +22,13 @@
   border-width: 1px;
   border-style: outset;
   border-color: black;
-  overflow-x: auto; overflow-y: auto;
   margin-right: 80px; 
   margin-left: 20px;
+  border-collapse: separate;
+  border-spacing: 50px 0;
+  overflow-x: auto; overflow-y: auto;
 }
+
 .select{
   margin-top: 10px;
   height: 8rem;
