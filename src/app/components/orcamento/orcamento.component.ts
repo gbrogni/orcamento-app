@@ -1,14 +1,14 @@
 import { MatSelectModule } from '@angular/material/select';
-import { HeaderService } from './../template/header/header.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { OrcamentoService } from './orcamento.service';
-import AnoConsult, { Orcamento } from './orcamento.model';
+import AnoConsult,  { Orcamento } from './orcamento.model';
 import { ActivatedRoute } from '@angular/router';
 
 export interface ano {
   anoValue: string;
   anoViewValue: string;
 }
+
 
 @Component({
   selector: 'app-orcamento',
@@ -29,7 +29,10 @@ export class OrcamentoComponent implements OnInit {
     custoTotal: 0,
   }]
 
-  displayedColumns: string[] = ['codProduto', 'nomeProduto', 'custoUni', 'valorVenda', 'custoTotal', 'vendaJaneiro', 'custoJaneiro', 'vendaFevereiro', 'custoFevereiro',
+  
+
+
+  displayedColumns: string[] = ['codProduto', 'nomeProduto', 'custoUni', 'vendaJaneiro', 'custoJaneiro', 'vendaFevereiro', 'custoFevereiro',
     'vendaMarço', 'custoMarço', 'vendaAbril', 'custoAbril', 'vendaMaio', 'custoMaio', 'vendaJunho', 'custoJunho', 'vendaJulho', 'custoJulho', 'vendaAgosto', 'custoAgosto',
     'vendaSetembro', 'custoSetembro', 'vendaOutubro', 'custoOutubro', 'vendaNovembro', 'custoNovembro', 'vendaDezembro', 'custoDezembro'];
   dataSource: Orcamento[] = [];
@@ -39,27 +42,22 @@ export class OrcamentoComponent implements OnInit {
     { anoValue: '2020', anoViewValue: '2020' },
   ]
 
+
   constructor(
     public orcamentoService: OrcamentoService,
-    private headerService: HeaderService,
     @Inject(MatSelectModule) public data: AnoConsult,
     @Inject(MatSelectModule) public mes: Orcamento,
     public route: ActivatedRoute
-  ) {
-    headerService.headerData = {
-      title: 'Orçamento',
-      icon: 'home',
-      routeUrl: ''
-    }
-  }
+  ) { }
 
-
+  count = 0;
   hidden!: boolean;
   hiddenn!: boolean;
 
 
   ngOnInit(): void {
     this.hidden = false;
+    this.visible = false;
   }
 
   ocultaVenda() {
@@ -93,6 +91,20 @@ export class OrcamentoComponent implements OnInit {
     }[mesEmNumero]
   }
 
+  visible!: boolean;
+
+  Visible() {
+    if (this.visible == false) {
+      this.visible = true
+    }
+  }
+
+  getCount() {
+    this.orcamentoService.getCountRecord(this.data.AnoConsult).subscribe((orcamentodados: any) => {
+      this.count = orcamentodados;
+    })
+  }
+
   calcular() {
     this.orcamentoService.getByYear(this.data.AnoConsult).subscribe(orcamentosdados => {
       let orcamentomap = this.agrupaProd(orcamentosdados);
@@ -119,13 +131,14 @@ export class OrcamentoComponent implements OnInit {
             }
           }
         }
+
         prod = { ...prod, ...produtoMes }
         orcamento.push(prod)
       }
-      console.log(orcamento)
-      console.log(orcamentomap)
       this.orcamentos = orcamento;
+    
     })
+    this.getCount()
   }
 
   agrupaProd(produtos: any[]) {

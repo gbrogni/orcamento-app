@@ -25,4 +25,6 @@ export class Orcamento{
 export default interface AnoConsult{
     AnoConsult: number;
     datas: Date;
+    count: number;
 }
+

@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatTableModule} from '@angular/material/table';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
+import {MatFormFieldModule} from '@angular/material/form-field';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/template/header/header.component';
@@ -44,6 +44,7 @@ registerLocaleData(localePt)
     MatButtonModule,
     FormsModule,
     MatCheckboxModule,
+    MatFormFieldModule,
 
   ],
   providers: [{   

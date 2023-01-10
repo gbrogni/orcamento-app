@@ -1,62 +1,89 @@
-
-
-.form{
+.form {
   background-color: #fff;
   border-radius: 16px;
-  height: 55em; width: 78rem;
+  height: 55em;
+  width: 78rem;
   position: relative;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
   width: 98%;
-  align-items:center;
+  align-items: center;
   top: 1.9rem;
   margin-left: 20px;
   margin-right: 20px;
 }
-.table{
-  table{
+
+.table {
+  table {
     width: 100%;
   }
+
   position: relative;
   width: 98%;
   height: 33rem;
   border-width: 1px;
   border-style: outset;
   border-color: black;
-  margin-right: 80px; 
+  margin-right: 80px;
   margin-left: 20px;
   border-collapse: separate;
   border-spacing: 50px 0;
-  overflow-x: auto; overflow-y: auto;
+  overflow-x: auto;
+  overflow-y: auto;
 }
 
-.select{
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+  padding: 15px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+label {
+  position: absolute;
+  left: 400px;
+  bottom: 50px;
+}
+
+input {
+  position: absolute;
+  left:500px;
+  bottom: 50px;
+}
+
+.select {
   margin-top: 10px;
   height: 8rem;
-  button{
+
+  button {
     float: right;
     margin-left: 1rem;
     margin-top: 20px;
     margin-right: 20px;
   }
-  .pick{
+
+  .pick {
     float: left;
     margin-left: 1.5rem;
     margin-top: 20px;
     margin-right: 20px;
   }
-  .check{
-    float:left;
+
+  .check {
+    float: left;
     margin-left: 20rem;
     margin-top: 30px;
-  } 
+  }
 }
-.handle{
-  &.hidden{
+
+.handle {
+  &.hidden {
     visibility: hidden;
   }
 }
-.handle{
-  &.hiddenn{
+
+.handle {
+  &.hiddenn {
     visibility: hidden;
   }
 }
