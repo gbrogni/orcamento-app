@@ -32,9 +32,9 @@ export class OrcamentoComponent implements OnInit {
   
 
 
-  displayedColumns: string[] = ['codProduto', 'nomeProduto', 'custoUni', 'vendaJaneiro', 'custoJaneiro', 'vendaFevereiro', 'custoFevereiro',
+  displayedColumns: string[] = ['codProduto', 'nomeProduto', 'custoUni',  'vendaJaneiro', 'custoJaneiro', 'vendaFevereiro', 'custoFevereiro',
     'vendaMarço', 'custoMarço', 'vendaAbril', 'custoAbril', 'vendaMaio', 'custoMaio', 'vendaJunho', 'custoJunho', 'vendaJulho', 'custoJulho', 'vendaAgosto', 'custoAgosto',
-    'vendaSetembro', 'custoSetembro', 'vendaOutubro', 'custoOutubro', 'vendaNovembro', 'custoNovembro', 'vendaDezembro', 'custoDezembro'];
+    'vendaSetembro', 'custoSetembro', 'vendaOutubro', 'custoOutubro', 'vendaNovembro', 'custoNovembro', 'vendaDezembro', 'custoDezembro', 'valorVenda', 'custoTotal'];
   dataSource: Orcamento[] = [];
 
   Anos: ano[] = [
@@ -109,6 +109,7 @@ export class OrcamentoComponent implements OnInit {
     this.orcamentoService.getByYear(this.data.AnoConsult).subscribe(orcamentosdados => {
       let orcamentomap = this.agrupaProd(orcamentosdados);
       let orcamento = [];
+      let i = 0;
       for (const [codProduto, produtos] of orcamentomap) {
         const mesMap = this.agrupaProdMes(produtos)
         let [prod] = produtos;
@@ -134,8 +135,42 @@ export class OrcamentoComponent implements OnInit {
 
         prod = { ...prod, ...produtoMes }
         orcamento.push(prod)
+
+        let somavendas = 0;
+        somavendas += orcamento[i].Janeiro.valorVenda;
+        somavendas += orcamento[i].Fevereiro.valorVenda;
+        somavendas += orcamento[i].Março.valorVenda;
+        somavendas += orcamento[i].Abril.valorVenda;
+        somavendas += orcamento[i].Maio.valorVenda;
+        somavendas += orcamento[i].Junho.valorVenda;
+        somavendas += orcamento[i].Julho.valorVenda;
+        somavendas += orcamento[i].Agosto.valorVenda;
+        somavendas += orcamento[i].Setembro.valorVenda;
+        somavendas += orcamento[i].Outubro.valorVenda;
+        somavendas += orcamento[i].Novembro.valorVenda;
+        somavendas += orcamento[i].Dezembro.valorVenda;
+
+        let somaCustos = 0;
+        somaCustos += orcamento[i].Janeiro.custoTotal;
+        somaCustos += orcamento[i].Fevereiro.custoTotal;
+        somaCustos += orcamento[i].Março.custoTotal;
+        somaCustos += orcamento[i].Abril.custoTotal;
+        somaCustos += orcamento[i].Maio.custoTotal;
+        somaCustos += orcamento[i].Junho.custoTotal;
+        somaCustos += orcamento[i].Julho.custoTotal;
+        somaCustos += orcamento[i].Agosto.custoTotal;
+        somaCustos += orcamento[i].Setembro.custoTotal;
+        somaCustos += orcamento[i].Outubro.custoTotal;
+        somaCustos += orcamento[i].Novembro.custoTotal;
+        somaCustos += orcamento[i].Dezembro.custoTotal;
+        let somas: any = { };
+        somas['soma'] = {somavendas, somaCustos}
+        prod = {...prod, ...somas}
+        orcamento[i] = prod
+        i++;
       }
       this.orcamentos = orcamento;
+      console.log(this.orcamentos)
     
     })
     this.getCount()
