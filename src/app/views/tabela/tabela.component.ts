@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { HeaderService } from 'src/app/components/template/header/header.service';
 
 @Component({
   selector: 'app-tabela',
@@ -9,17 +7,9 @@ import { HeaderService } from 'src/app/components/template/header/header.service
 })
 export class TabelaComponent implements OnInit {
 
-  constructor(private router: Router, headerService: HeaderService) { 
-    headerService.headerData = {
-      title: 'Home',
-      icon: 'home',
-      routeUrl: ''
-    }
-  }
+  constructor() { }
 
   ngOnInit(): void {
   }
-
-
 
 }

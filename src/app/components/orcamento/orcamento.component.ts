@@ -1,8 +1,9 @@
 import { MatSelectModule } from '@angular/material/select';
 import { Component, Inject, OnInit } from '@angular/core';
 import { OrcamentoService } from './orcamento.service';
-import AnoConsult,  { Orcamento } from './orcamento.model';
+import AnoConsult, { Orcamento } from './orcamento.model';
 import { ActivatedRoute } from '@angular/router';
+import { parse } from 'path';
 
 export interface ano {
   anoValue: string;
@@ -29,10 +30,10 @@ export class OrcamentoComponent implements OnInit {
     custoTotal: 0,
   }]
 
-  
 
 
-  displayedColumns: string[] = ['codProduto', 'nomeProduto', 'custoUni',  'vendaJaneiro', 'custoJaneiro', 'vendaFevereiro', 'custoFevereiro',
+
+  displayedColumns: string[] = ['codProduto', 'nomeProduto', 'custoUni', 'vendaJaneiro', 'custoJaneiro', 'vendaFevereiro', 'custoFevereiro',
     'vendaMarço', 'custoMarço', 'vendaAbril', 'custoAbril', 'vendaMaio', 'custoMaio', 'vendaJunho', 'custoJunho', 'vendaJulho', 'custoJulho', 'vendaAgosto', 'custoAgosto',
     'vendaSetembro', 'custoSetembro', 'vendaOutubro', 'custoOutubro', 'vendaNovembro', 'custoNovembro', 'vendaDezembro', 'custoDezembro', 'valorVenda', 'custoTotal'];
   dataSource: Orcamento[] = [];
@@ -53,7 +54,34 @@ export class OrcamentoComponent implements OnInit {
   count = 0;
   hidden!: boolean;
   hiddenn!: boolean;
-
+  somaJan: number = 0;
+  somaFev: number = 0;
+  somaMar: number = 0;
+  somaAbr: number = 0;
+  somaMai: number = 0;
+  somaJun: number = 0;
+  somaJul: number = 0;
+  somaAgo: number = 0;
+  somaSet: number = 0;
+  somaOut: number = 0;
+  somaNov: number = 0;
+  somaDez: number = 0;
+  custoJan: number = 0;
+  custoFev: number = 0;
+  custoMar: number = 0;
+  custoAbr: number = 0;
+  custoMai: number = 0;
+  custoJun: number = 0;
+  custoJul: number = 0;
+  custoAgo: number = 0;
+  custoSet: number = 0;
+  custoOut: number = 0;
+  custoNov: number = 0;
+  custoDez: number = 0;
+  somaTotal: number = 0;
+  custosTotal: number = 0;
+  mediaUni: number = 0;
+  totalProdutos: number = 0;
 
   ngOnInit(): void {
     this.hidden = false;
@@ -99,11 +127,22 @@ export class OrcamentoComponent implements OnInit {
     }
   }
 
+  mediaCustoUnitario() {
+    let total = this.orcamentos.map(t => t.custoUni!).reduce((acc, value) => acc + value, 0)
+    let count = this.countDistinct(this.orcamentos)
+    return total / count;
+  }
+
+  countDistinct(arr: any) {
+    return new Set(arr).size;
+  }
+
   getCount() {
     this.orcamentoService.getCountRecord(this.data.AnoConsult).subscribe((orcamentodados: any) => {
       this.count = orcamentodados;
     })
   }
+
 
   calcular() {
     this.orcamentoService.getByYear(this.data.AnoConsult).subscribe(orcamentosdados => {
@@ -150,6 +189,34 @@ export class OrcamentoComponent implements OnInit {
         somavendas += orcamento[i].Novembro.valorVenda;
         somavendas += orcamento[i].Dezembro.valorVenda;
 
+        this.somaJan += orcamento[i].Janeiro.valorVenda;
+        this.somaFev += orcamento[i].Fevereiro.valorVenda;
+        this.somaMar += orcamento[i].Março.valorVenda;
+        this.somaAbr += orcamento[i].Abril.valorVenda;
+        this.somaMai += orcamento[i].Maio.valorVenda;
+        this.somaJun += orcamento[i].Junho.valorVenda;
+        this.somaJul += orcamento[i].Julho.valorVenda;
+        this.somaAgo += orcamento[i].Agosto.valorVenda;
+        this.somaSet += orcamento[i].Setembro.valorVenda;
+        this.somaOut += orcamento[i].Outubro.valorVenda;
+        this.somaNov += orcamento[i].Novembro.valorVenda;
+        this.somaDez += orcamento[i].Dezembro.valorVenda;
+        
+
+        this.custoJan += orcamento[i].Janeiro.custoTotal;
+        this.custoFev += orcamento[i].Fevereiro.custoTotal;
+        this.custoMar += orcamento[i].Março.custoTotal;
+        this.custoAbr += orcamento[i].Abril.custoTotal;
+        this.custoMai += orcamento[i].Maio.custoTotal;
+        this.custoJun += orcamento[i].Junho.custoTotal;
+        this.custoJul += orcamento[i].Julho.custoTotal;
+        this.custoAgo += orcamento[i].Agosto.custoTotal;
+        this.custoSet += orcamento[i].Setembro.custoTotal;
+        this.custoOut += orcamento[i].Outubro.custoTotal;
+        this.custoNov += orcamento[i].Novembro.custoTotal;
+        this.custoDez += orcamento[i].Dezembro.custoTotal;
+        
+
         let somaCustos = 0;
         somaCustos += orcamento[i].Janeiro.custoTotal;
         somaCustos += orcamento[i].Fevereiro.custoTotal;
@@ -163,15 +230,17 @@ export class OrcamentoComponent implements OnInit {
         somaCustos += orcamento[i].Outubro.custoTotal;
         somaCustos += orcamento[i].Novembro.custoTotal;
         somaCustos += orcamento[i].Dezembro.custoTotal;
-        let somas: any = { };
-        somas['soma'] = {somavendas, somaCustos}
-        prod = {...prod, ...somas}
+        let somas: any = {};
+        somas['soma'] = { somavendas, somaCustos }
+        prod = { ...prod, ...somas }
         orcamento[i] = prod
         i++;
+        this.somaTotal += somavendas;
+        this.custosTotal += somaCustos;
       }
       this.orcamentos = orcamento;
       console.log(this.orcamentos)
-    
+
     })
     this.getCount()
   }
