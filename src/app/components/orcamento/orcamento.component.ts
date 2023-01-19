@@ -33,9 +33,10 @@ export class OrcamentoComponent implements OnInit {
 
 
 
-  displayedColumns: string[] = ['codProduto', 'nomeProduto', 'custoUni', 'vendaJaneiro', 'custoJaneiro', 'vendaFevereiro', 'custoFevereiro',
-    'vendaMarço', 'custoMarço', 'vendaAbril', 'custoAbril', 'vendaMaio', 'custoMaio', 'vendaJunho', 'custoJunho', 'vendaJulho', 'custoJulho', 'vendaAgosto', 'custoAgosto',
-    'vendaSetembro', 'custoSetembro', 'vendaOutubro', 'custoOutubro', 'vendaNovembro', 'custoNovembro', 'vendaDezembro', 'custoDezembro', 'valorVenda', 'custoTotal'];
+  displayedColumns: string[] = ['codProduto', 'nomeProduto', 'custoUni', 'vendaJaneiro', 'custoJaneiro', 'AVJan', 'AV1', 'vendaFevereiro', 'custoFevereiro', 'AVFev', 'AV2',
+    'vendaMarço', 'custoMarço', 'AVMar', 'AV3', 'vendaAbril', 'custoAbril', 'AVAbr', 'AV4', 'vendaMaio', 'custoMaio', 'AVMai', 'AV5', 'vendaJunho', 'custoJunho', 'AVJun', 'AV6',
+    'vendaJulho', 'custoJulho', 'AVJul', 'AV7', 'vendaAgosto', 'custoAgosto', 'AVAgo', 'AV8', 'vendaSetembro', 'custoSetembro', 'AVSet', 'AV9', 'vendaOutubro', 'custoOutubro',
+    'AVOut', 'AV10', 'vendaNovembro', 'custoNovembro', 'AVNov', 'AV11', 'vendaDezembro', 'custoDezembro', 'AVDez', 'AV12', 'valorVenda', 'AVSoma', 'custoTotal', 'AVCusto'];
   dataSource: Orcamento[] = [];
 
   Anos: ano[] = [
@@ -52,6 +53,7 @@ export class OrcamentoComponent implements OnInit {
   ) { }
 
   count = 0;
+  show!: boolean;
   hidden!: boolean;
   hiddenn!: boolean;
   somaJan: number = 0;
@@ -82,14 +84,45 @@ export class OrcamentoComponent implements OnInit {
   custosTotal: number = 0;
   mediaUni: number = 0;
   totalProdutos: number = 0;
+  AVjan: number = 0;
+  AVfev: number = 0;
+  AVmar: number = 0;
+  AVabr: number = 0;
+  AVmai: number = 0;
+  AVjun: number = 0;
+  AVjul: number = 0;
+  AVago: number = 0;
+  AVset: number = 0;
+  AVout: number = 0;
+  AVnov: number = 0;
+  AVdez: number = 0;
+  AV1: number = 0;
+  AV2: number = 0;
+  AV3: number = 0;
+  AV4: number = 0;
+  AV5: number = 0;
+  AV6: number = 0;
+  AV7: number = 0;
+  AV8: number = 0;
+  AV9: number = 0;
+  AV10: number = 0;
+  AV11: number = 0;
+  AV12: number = 0;
+  AVList: any = [];
 
   ngOnInit(): void {
     this.hidden = false;
+    this.hiddenn = false;
     this.visible = false;
+    this.show = true;
   }
 
   ocultaVenda() {
     this.hidden = !this.hidden;
+  }
+
+  ocultaAV() {
+    this.show = !this.show;
   }
 
   ocultaCusto() {
@@ -201,7 +234,6 @@ export class OrcamentoComponent implements OnInit {
         this.somaOut += orcamento[i].Outubro.valorVenda;
         this.somaNov += orcamento[i].Novembro.valorVenda;
         this.somaDez += orcamento[i].Dezembro.valorVenda;
-        
 
         this.custoJan += orcamento[i].Janeiro.custoTotal;
         this.custoFev += orcamento[i].Fevereiro.custoTotal;
@@ -215,7 +247,6 @@ export class OrcamentoComponent implements OnInit {
         this.custoOut += orcamento[i].Outubro.custoTotal;
         this.custoNov += orcamento[i].Novembro.custoTotal;
         this.custoDez += orcamento[i].Dezembro.custoTotal;
-        
 
         let somaCustos = 0;
         somaCustos += orcamento[i].Janeiro.custoTotal;
@@ -234,12 +265,155 @@ export class OrcamentoComponent implements OnInit {
         somas['soma'] = { somavendas, somaCustos }
         prod = { ...prod, ...somas }
         orcamento[i] = prod
-        i++;
         this.somaTotal += somavendas;
         this.custosTotal += somaCustos;
+        i++;
       }
+
+      for (let j = 0; j < orcamento.length; j++) {
+        let AvJaneiro: number = 0
+        if (orcamento[j].Janeiro.valorVenda != 0) {
+          let custoItemJan: number = orcamento[j].Janeiro.valorVenda
+          AvJaneiro = (custoItemJan * 100) / this.somaJan
+        }
+        let AvJanCusto: number = 0
+        if (orcamento[j].Janeiro.custoTotal != 0) {
+          let custoItemJan: number = orcamento[j].Janeiro.custoTotal
+          AvJanCusto = (custoItemJan * 100) / this.custoJan
+        }
+        let AvFev: number = 0
+        if (orcamento[j].Fevereiro.valorVenda != 0) {
+          let custoItemJan: number = orcamento[j].Fevereiro.valorVenda
+          AvFev = (custoItemJan * 100) / this.somaFev
+        }
+        let AvFevCusto: number = 0
+        if (orcamento[j].Fevereiro.custoTotal != 0) {
+          let custoItemJan: number = orcamento[j].Fevereiro.custoTotal
+          AvFevCusto = (custoItemJan * 100) / this.custoFev
+        }
+        let AvMar: number = 0
+        if (orcamento[j].Março.valorVenda != 0) {
+          let custoItemJan: number = orcamento[j].Março.valorVenda
+          AvMar = (custoItemJan * 100) / this.somaMar
+        }
+        let AvMarCusto: number = 0
+        if (orcamento[j].Março.custoTotal != 0) {
+          let custoItemJan: number = orcamento[j].Março.custoTotal
+          AvMarCusto = (custoItemJan * 100) / this.custoMar
+        }
+        let AvAbr: number = 0
+        if (orcamento[j].Abril.valorVenda != 0) {
+          let custoItemJan: number = orcamento[j].Abril.valorVenda
+          AvAbr = (custoItemJan * 100) / this.somaAbr
+        }
+        let AvAbrCusto: number = 0
+        if (orcamento[j].Abril.custoTotal != 0) {
+          let custoItemJan: number = orcamento[j].Abril.custoTotal
+          AvAbrCusto = (custoItemJan * 100) / this.custoAbr
+        }
+        let AvMai: number = 0
+        if (orcamento[j].Maio.valorVenda != 0) {
+          let custoItemJan: number = orcamento[j].Maio.valorVenda
+          AvMai = (custoItemJan * 100) / this.somaMai
+        }
+        let AvMaiCusto: number = 0
+        if (orcamento[j].Maio.custoTotal != 0) {
+          let custoItemJan: number = orcamento[j].Maio.custoTotal
+          AvMaiCusto = (custoItemJan * 100) / this.custoMai
+        }
+        let AvJun: number = 0
+        if (orcamento[j].Junho.valorVenda != 0) {
+          let custoItemJan: number = orcamento[j].Junho.valorVenda
+          AvJun = (custoItemJan * 100) / this.somaJun
+        }
+        let AvJunCusto: number = 0
+        if (orcamento[j].Junho.custoTotal != 0) {
+          let custoItemJan: number = orcamento[j].Junho.custoTotal
+          AvJunCusto = (custoItemJan * 100) / this.custoJun
+        }
+        let AvJul: number = 0
+        if (orcamento[j].Julho.valorVenda != 0) {
+          let custoItemJan: number = orcamento[j].Julho.valorVenda
+          AvJul = (custoItemJan * 100) / this.somaJul
+        }
+        let AvJulCusto: number = 0
+        if (orcamento[j].Julho.custoTotal != 0) {
+          let custoItemJan: number = orcamento[j].Julho.custoTotal
+          AvJulCusto = (custoItemJan * 100) / this.custoJul
+        }
+        let AvAgo: number = 0
+        if (orcamento[j].Agosto.valorVenda != 0) {
+          let custoItemJan: number = orcamento[j].Agosto.valorVenda
+          AvAgo = (custoItemJan * 100) / this.somaAgo
+        }
+        let AvAgoCusto: number = 0
+        if (orcamento[j].Agosto.custoTotal != 0) {
+          let custoItemJan: number = orcamento[j].Agosto.custoTotal
+          AvAgoCusto = (custoItemJan * 100) / this.custoAgo
+        }
+        let AvSet: number = 0
+        if (orcamento[j].Setembro.valorVenda != 0) {
+          let custoItemJan: number = orcamento[j].Setembro.valorVenda
+          AvSet = (custoItemJan * 100) / this.somaSet
+        }
+        let AvSetCusto: number = 0
+        if (orcamento[j].Setembro.custoTotal != 0) {
+          let custoItemJan: number = orcamento[j].Setembro.custoTotal
+          AvSetCusto = (custoItemJan * 100) / this.custoSet
+        }
+        let AvOut: number = 0
+        if (orcamento[j].Outubro.valorVenda != 0) {
+          let custoItemJan: number = orcamento[j].Outubro.valorVenda
+          AvOut = (custoItemJan * 100) / this.somaOut
+        }
+        let AvOutCusto: number = 0
+        if (orcamento[j].Outubro.custoTotal != 0) {
+          let custoItemJan: number = orcamento[j].Outubro.custoTotal
+          AvOutCusto = (custoItemJan * 100) / this.custoOut
+        }
+        let AvNov: number = 0
+        if (orcamento[j].Novembro.valorVenda != 0) {
+          let custoItemJan: number = orcamento[j].Novembro.valorVenda
+          AvNov = (custoItemJan * 100) / this.somaNov
+        }
+        let AvNovCusto: number = 0
+        if (orcamento[j].Novembro.custoTotal != 0) {
+          let custoItemJan: number = orcamento[j].Novembro.custoTotal
+          AvNovCusto = (custoItemJan * 100) / this.custoNov
+        }
+        let AvDez: number = 0
+        if (orcamento[j].Dezembro.valorVenda != 0) {
+          let custoItemJan: number = orcamento[j].Dezembro.valorVenda
+          AvDez = (custoItemJan * 100) / this.somaDez
+        }
+        let AvDezCusto: number = 0
+        if (orcamento[j].Dezembro.custoTotal != 0) {
+          let custoItemJan: number = orcamento[j].Dezembro.custoTotal
+          AvDezCusto = (custoItemJan * 100) / this.custoDez
+        }
+        let AvSoma: number = 0
+        if (orcamento[j].soma.somavendas != 0) {
+          let custoItemJan: number = orcamento[j].soma.somavendas
+          AvSoma = (custoItemJan * 100) / this.somaTotal
+        }
+        let AvCusto: number = 0
+        if (orcamento[j].soma.somaCustos != 0) {
+          let custoItemJan: number = orcamento[j].soma.somaCustos
+          AvCusto = (custoItemJan * 100) / this.custosTotal
+        }
+
+
+        let Av: any = {}
+        Av['Avs'] = {
+          AvJaneiro, AvJanCusto, AvFev, AvFevCusto, AvMar, AvMarCusto, AvAbr, AvAbrCusto, AvMai, AvMaiCusto, AvJun, AvJunCusto, AvJul, AvJulCusto,
+          AvAgo, AvAgoCusto, AvSet, AvSetCusto, AvOut, AvOutCusto, AvNov, AvNovCusto, AvDez, AvDezCusto, AvSoma, AvCusto
+        }
+        orcamento[j] = { ...orcamento[j], ...Av }
+        console.log(orcamento[j])
+      }
+
+
       this.orcamentos = orcamento;
-      console.log(this.orcamentos)
 
     })
     this.getCount()
