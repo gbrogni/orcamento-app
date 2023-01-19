@@ -15,9 +15,11 @@
     <mat-checkbox class="checkVenda" (change)="ocultaVenda()">Ocultar venda</mat-checkbox>
     <mat-checkbox class="checkCusto" (change)="ocultaCusto()">Ocultar custo</mat-checkbox>
     <mat-checkbox class="checkAV" (change)="ocultaAV()">%AV custo e venda</mat-checkbox>
+    <mat-checkbox class="checkCxV" (change)="ocultaCxV()">% custo x venda</mat-checkbox>
     <div *ngIf="visible">
       <label class="label">Count distinct</label>
-      <input matInput class="input" type="text" [value]="count" disabled>
+      <!-- <input matInput class="input" type="text" [value]="count" disabled> -->
+      <label class="input">{{count}}</label>
     </div>
   </div>
   <div class="table">
@@ -39,7 +41,7 @@
       <ng-container matColumnDef="custoUni">
         <th mat-header-cell *matHeaderCellDef> Custo uni. </th>
         <td mat-cell *matCellDef="let row"> {{row.custoUni || "0" | currency: 'BRL'}} </td>
-        <td mat-footer-cell *matFooterCellDef> {{mediaCustoUnitario() || "0" | currency: 'BRL'}} </td>
+        <td mat-footer-cell *matFooterCellDef>Média: {{mediaCustoUnitario() || "0" | currency: 'BRL'}} </td>
       </ng-container>
 
       
@@ -70,6 +72,12 @@
         <td mat-footer-cell *matFooterCellDef [hidden]="show"> </td>
       </ng-container>
 
+      <ng-container matColumnDef="CxVJan">
+        <th mat-header-cell *matHeaderCellDef [hidden]="showed"> Custo x venda jan. </th>
+        <td mat-cell *matCellDef="let row" [hidden]="showed"> {{row.Lucros?.AvJaneiro.toFixed(2)}}% </td>
+        <td mat-footer-cell *matFooterCellDef [hidden]="showed"> </td>
+      </ng-container>
+
       
       <ng-container matColumnDef="vendaFevereiro">
         <th mat-header-cell *matHeaderCellDef> Venda fev.</th>
@@ -96,6 +104,12 @@
         <th mat-header-cell *matHeaderCellDef [hidden]="show"> AV custo fev. </th>
         <td mat-cell *matCellDef="let row" [hidden]="show"> {{row.Avs?.AvFevCusto.toFixed(2) || "0"}}% </td>
         <td mat-footer-cell *matFooterCellDef [hidden]="show"> </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CxVFev">
+        <th mat-header-cell *matHeaderCellDef [hidden]="showed"> Custo x venda fev. </th>
+        <td mat-cell *matCellDef="let row" [hidden]="showed"> {{row.Lucros?.AvFev.toFixed(2)}}% </td>
+        <td mat-footer-cell *matFooterCellDef [hidden]="showed"> </td>
       </ng-container>
 
       
@@ -127,6 +141,12 @@
         <td mat-footer-cell *matFooterCellDef [hidden]="show"> </td>
       </ng-container>
 
+      <ng-container matColumnDef="CxVMar">
+        <th mat-header-cell *matHeaderCellDef [hidden]="showed"> Custo x venda mar. </th>
+        <td mat-cell *matCellDef="let row" [hidden]="showed"> {{row.Lucros?.AvMar.toFixed(2)}}% </td>
+        <td mat-footer-cell *matFooterCellDef [hidden]="showed"> </td>
+      </ng-container>
+
       
       <ng-container matColumnDef="vendaAbril">
         <th mat-header-cell *matHeaderCellDef> Venda abr. </th>
@@ -153,6 +173,12 @@
         <th mat-header-cell *matHeaderCellDef [hidden]="show"> AV custo abr. </th>
         <td mat-cell *matCellDef="let row" [hidden]="show"> {{row.Avs?.AvAbrCusto.toFixed(2) || "0"}}% </td>
         <td mat-footer-cell *matFooterCellDef [hidden]="show"> </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CxVAbr">
+        <th mat-header-cell *matHeaderCellDef [hidden]="showed"> Custo x venda abr. </th>
+        <td mat-cell *matCellDef="let row" [hidden]="showed"> {{row.Lucros?.AvAbr.toFixed(2)}}% </td>
+        <td mat-footer-cell *matFooterCellDef [hidden]="showed"> </td>
       </ng-container>
 
       
@@ -183,6 +209,12 @@
         <td mat-footer-cell *matFooterCellDef [hidden]="show"> </td>
       </ng-container>
 
+      <ng-container matColumnDef="CxVMai">
+        <th mat-header-cell *matHeaderCellDef [hidden]="showed"> Custo x venda mai. </th>
+        <td mat-cell *matCellDef="let row" [hidden]="showed"> {{row.Lucros?.AvMai.toFixed(2)}}% </td>
+        <td mat-footer-cell *matFooterCellDef [hidden]="showed"> </td>
+      </ng-container>
+
       
       <ng-container matColumnDef="vendaJunho">
         <th mat-header-cell *matHeaderCellDef> Venda jun. </th>
@@ -209,6 +241,12 @@
         <th mat-header-cell *matHeaderCellDef [hidden]="show"> AV custo jun. </th>
         <td mat-cell *matCellDef="let row" [hidden]="show"> {{row.Avs?.AvJunCusto.toFixed(2) || "0"}}% </td>
         <td mat-footer-cell *matFooterCellDef [hidden]="show"> </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CxVJun">
+        <th mat-header-cell *matHeaderCellDef [hidden]="showed"> Custo x venda jun. </th>
+        <td mat-cell *matCellDef="let row" [hidden]="showed"> {{row.Lucros?.AvJun.toFixed(2)}}% </td>
+        <td mat-footer-cell *matFooterCellDef [hidden]="showed"> </td>
       </ng-container>
 
       
@@ -239,6 +277,12 @@
         <td mat-footer-cell *matFooterCellDef [hidden]="show"> </td>
       </ng-container>
 
+      <ng-container matColumnDef="CxVJul">
+        <th mat-header-cell *matHeaderCellDef [hidden]="showed"> Custo x venda jul. </th>
+        <td mat-cell *matCellDef="let row" [hidden]="showed"> {{row.Lucros?.AvJul.toFixed(2)}}% </td>
+        <td mat-footer-cell *matFooterCellDef [hidden]="showed"> </td>
+      </ng-container>
+
       
       <ng-container matColumnDef="vendaAgosto">
         <th mat-header-cell *matHeaderCellDef> Venda ago. </th>
@@ -265,6 +309,12 @@
         <th mat-header-cell *matHeaderCellDef [hidden]="show"> AV custo ago. </th>
         <td mat-cell *matCellDef="let row" [hidden]="show"> {{row.Avs?.AvAgoCusto.toFixed(2) || "0"}}% </td>
         <td mat-footer-cell *matFooterCellDef [hidden]="show"> </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CxVAgo">
+        <th mat-header-cell *matHeaderCellDef [hidden]="showed"> Custo x venda ago. </th>
+        <td mat-cell *matCellDef="let row" [hidden]="showed"> {{row.Lucros?.AvAgo.toFixed(2)}}% </td>
+        <td mat-footer-cell *matFooterCellDef [hidden]="showed"> </td>
       </ng-container>
 
       
@@ -295,6 +345,12 @@
         <td mat-footer-cell *matFooterCellDef [hidden]="show"> </td>
       </ng-container>
 
+      <ng-container matColumnDef="CxVSet">
+        <th mat-header-cell *matHeaderCellDef [hidden]="showed"> Custo x venda set. </th>
+        <td mat-cell *matCellDef="let row" [hidden]="showed"> {{row.Lucros?.AvSet.toFixed(2)}}% </td>
+        <td mat-footer-cell *matFooterCellDef [hidden]="showed"> </td>
+      </ng-container>
+
       
       <ng-container matColumnDef="vendaOutubro">
         <th mat-header-cell *matHeaderCellDef> Venda out. </th>
@@ -321,6 +377,12 @@
         <th mat-header-cell *matHeaderCellDef [hidden]="show"> AV custo out. </th>
         <td mat-cell *matCellDef="let row" [hidden]="show"> {{row.Avs?.AvOutCusto.toFixed(2) || "0"}}% </td>
         <td mat-footer-cell *matFooterCellDef [hidden]="show"> </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CxVOut">
+        <th mat-header-cell *matHeaderCellDef [hidden]="showed"> Custo x venda out. </th>
+        <td mat-cell *matCellDef="let row" [hidden]="showed"> {{row.Lucros?.AvOut.toFixed(2)}}% </td>
+        <td mat-footer-cell *matFooterCellDef [hidden]="showed"> </td>
       </ng-container>
 
       
@@ -351,6 +413,12 @@
         <td mat-footer-cell *matFooterCellDef [hidden]="show"> </td>
       </ng-container>
 
+      <ng-container matColumnDef="CxVNov">
+        <th mat-header-cell *matHeaderCellDef [hidden]="showed"> Custo x venda nov. </th>
+        <td mat-cell *matCellDef="let row" [hidden]="showed"> {{row.Lucros?.AvNov.toFixed(2)}}% </td>
+        <td mat-footer-cell *matFooterCellDef [hidden]="showed"> </td>
+      </ng-container>
+
       
       <ng-container matColumnDef="vendaDezembro">
         <th mat-header-cell *matHeaderCellDef> Venda dez. </th>
@@ -377,6 +445,12 @@
         <th mat-header-cell *matHeaderCellDef [hidden]="show"> AV custo dez. </th>
         <td mat-cell *matCellDef="let row" [hidden]="show"> {{row.Avs?.AvDezCusto.toFixed(2) || "0"}}% </td>
         <td mat-footer-cell *matFooterCellDef [hidden]="show"> </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CxVDez">
+        <th mat-header-cell *matHeaderCellDef [hidden]="showed"> Custo x venda dez. </th>
+        <td mat-cell *matCellDef="let row" [hidden]="showed"> {{row.Lucros?.AvDez.toFixed(2)}}% </td>
+        <td mat-footer-cell *matFooterCellDef [hidden]="showed"> </td>
       </ng-container>
 
       <ng-container matColumnDef="valorVenda">
